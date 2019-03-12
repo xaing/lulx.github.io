@@ -172,98 +172,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<ul>
+        <ul>
 <li><p>配置</p>
 <ul>
 <li>电脑为笔记本window 10 ，64位</li>
 </ul>
-</li>
-<li><p>安装环境</p>
-<ul>
-<li><p>node.js</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v </span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Git环境</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>安装步骤</p>
-<ol>
-<li><p>Github账号申请并新建项目</p>
-<ol>
-<li>项目格式：账号名.github.io（建好可修改）</li>
-<li>public</li>
-<li>勾选Initialize this repository with a README</li>
-<li>新建项目右侧setting，下拉Github pages，可外网访问该链接</li>
-</ol>
-</li>
-<li><p>安装Hexo</p>
-<ol>
-<li><p>新建合适目录安装如：/d/softInstall/blog</p>
-</li>
-<li><p>进入新建文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 安装Hexo</span><br><span class="line">npm install hexo -g</span><br><span class="line"># 检查Hexo安装状态</span><br><span class="line">hexo -v</span><br><span class="line"># 初始化文件夹</span><br><span class="line">hexo init</span><br><span class="line"># 安装需要的组件</span><br><span class="line">npm install</span><br><span class="line"># 首次体验Hexo</span><br><span class="line">hexo g</span><br><span class="line"># 开启服务</span><br><span class="line">hexo s</span><br><span class="line"># 更改启动端口</span><br><span class="line">hexo server -p 5000</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置Hexo与Github免密</p>
-<ol>
-<li><p>生成秘钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 进入.ssh文件夹</span><br><span class="line">cd ~/.ssh</span><br><span class="line"># 生成秘钥</span><br><span class="line">ssh-keygen -t rsa -C &quot;llx@hunktey.com&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>GIthub添加ssh</p>
-<ol>
-<li>GitHub头像settings，SSH and GPG keys栏</li>
-<li>new ssh key，复杂id_rsa.pub文件内容</li>
-</ol>
-</li>
-<li><p>测试免密连接状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>配置Hexo</p>
-<ol>
-<li><p>配置Hexo目录_config.yml</p>
-</li>
-<li><p>配置Deployment</p>
-<p>​    <img src="C:\Users\lulx\AppData\Roaming\Typora\typora-user-images\1552357356056.png" alt="1552357356056"><br>​          </p>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ul>
-<ol start="3">
-<li><p>新增博客</p>
-<ol>
-<li><p>新建博客</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 新建</span><br><span class="line">hexo new post &quot;hello world&quot;</span><br><span class="line"># 安装扩展</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"># 生成及部署</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li><p>常用功能</p>
-<ol>
-<li><p>文件头</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: postName #文章页面上的显示名称，一般是中文</span><br><span class="line">date: 2013-12-02 15:30:16 #文章生成时间，一般不改，当然也可以任意修改</span><br><span class="line">categories: 默认分类 #分类</span><br><span class="line">tags: [tag1,tag2,tag3] #文章标签，可空，多标签请用格式，注意:后面有个空格</span><br><span class="line">description: 附加一段文章摘要，字数最好在140字以内，会出现在meta的description里面</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">以下是正文</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示部分内容</p>
-<ul>
-<li>在合适的位置加上<code>&lt;!--more--&gt;</code>即可</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2019/03/12/hexo-GitHub-0/#more">more >></a>
+        
       
 
       
-    </div>
+    </li></ul></div>
     <div class="article-info article-info-index">
       
       
