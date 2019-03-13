@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://xaing.github.io">
   <title>java 日志框架 | Lulx的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义  slf4j​    是基于API的java日志框架，slf4j提供了简单统一的日志记录的接口，开发者在配置部署时只需要吸纳这个接口就能实现日志功能。 ​    自身没有提供具体的日志解决方案，它是负责服务于各种各样的日志系统">
+  <meta name="description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义">
 <meta name="keywords" content="java,log">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java 日志框架">
 <meta property="og:url" content="https://xaing.github.io/2019/03/12/java-log-framework/index.html">
 <meta property="og:site_name" content="Lulx的博客">
-<meta property="og:description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义  slf4j​    是基于API的java日志框架，slf4j提供了简单统一的日志记录的接口，开发者在配置部署时只需要吸纳这个接口就能实现日志功能。 ​    自身没有提供具体的日志解决方案，它是负责服务于各种各样的日志系统">
+<meta property="og:description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-13T02:12:24.046Z">
+<meta property="og:updated_time" content="2019-03-13T02:38:53.839Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 日志框架">
-<meta name="twitter:description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义  slf4j​    是基于API的java日志框架，slf4j提供了简单统一的日志记录的接口，开发者在配置部署时只需要吸纳这个接口就能实现日志功能。 ​    自身没有提供具体的日志解决方案，它是负责服务于各种各样的日志系统">
+<meta name="twitter:description" content="统一日志接口规范 统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架将日志level、日志输出等统一的管理接口抽象层的适配器对各种日志框架使用方法实现了统一定义">
   
     <link rel="alternative" href="/atom.xml" title="Lulx的博客" type="application/atom+xml">
   
@@ -178,6 +178,7 @@
         <h4 id="统一日志接口规范"><a href="#统一日志接口规范" class="headerlink" title="统一日志接口规范"></a>统一日志接口规范</h4><blockquote>
 <p>统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架<br>将日志level、日志输出等统一的管理<br>接口抽象层的适配器对各种日志框架使用方法实现了统一定义</p>
 </blockquote>
+<a id="more"></a>
 <h5 id="slf4j"><a href="#slf4j" class="headerlink" title="slf4j"></a>slf4j</h5><p>​    是基于API的java日志框架，slf4j提供了简单统一的日志记录的接口，开发者在配置部署时只需要吸纳这个接口就能实现日志功能。</p>
 <p>​    自身没有提供具体的日志解决方案，它是负责服务于各种各样的日志系统，允许用户在部署应用上使用自己常用的日志框架。</p>
 <h5 id="commons-logging"><a href="#commons-logging" class="headerlink" title="commons-logging"></a>commons-logging</h5><p>​    允许运行时绑定任意的日志库。</p>
@@ -235,23 +236,59 @@
 </li>
 <li><p>Appenders节点，三个子节点</p>
 <ol>
-<li>Console：用来定义输出到控制台的Appender<ul>
+<li><p>Console：用来定义输出到控制台的Appender</p>
+<ul>
+<li>属性<ul>
 <li>name：指定Appender的名字</li>
 <li>target：SYSTEM_OUT或SYSTEM_ERR，一般只设置默认：SYSTEM_OUT</li>
-<li>PatternLayout：输出格式，不设置默认为%m%n</li>
 </ul>
 </li>
-<li>File：定义输出到指定位置的文件的Appender<ul>
+<li>子节点<ol>
+<li>PatternLayout：输出格式，不设置默认为%m%n</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>File：定义输出到指定位置的文件的Appender</p>
+<ul>
+<li><p>属性</p>
+<ul>
 <li>name：指定Appender的名字</li>
 <li>filename：指定输出日志的目的文件带全路径的文件名</li>
-<li>PatternLayout：输出格式，不设置默认为%m%n</li>
+<li>append：=“false”，控制log每次运行会自动清空</li>
 </ul>
 </li>
-<li>RollingFile：定义超出指定大小自动删除旧的创建新的Appender<ul>
+<li><p>子节点</p>
+<ol>
+<li>PatternLayout：输出格式，不设置默认为%m%n</li>
+</ol>
+<ul>
+<li>pattern：”%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>RollingFile：定义超出指定大小自动删除旧的创建新的Appender</p>
+<ul>
+<li><p>属性</p>
+<ul>
 <li>name：指定Appender的名字</li>
 <li>filename：指定输出日志的目的文件带 全路径的文件名</li>
-<li>PatternLayout：输出格式，不设置默认%m%n</li>
 <li>filePattern：指定新建日志文件的名称格式</li>
+</ul>
+</li>
+<li><p>子节点</p>
+<ol>
+<li>PatternLayout：输出格式，不设置默认%m%n<ul>
+<li>pattern</li>
+</ul>
+</li>
+<li>ThresholdFilter：控制输出日志级别<ul>
+<li>level：只输出level及以上级别的消息</li>
+<li>onMatch：=“accept”，接受level配置的日志</li>
+<li>onMismatch：=“deny”，非level配置的日志直接拒绝</li>
+</ul>
+</li>
 <li>Policies：指定滚动日志的策略，什么时候进行新建日志文件的输出日志<ol>
 <li>子节点TimeBasedTriggeringPolicy，基于时间的滚动策略<ul>
 <li>interval：指定多久滚动一次，默认是1hour</li>
@@ -264,9 +301,12 @@
 </li>
 </ol>
 </li>
-<li>DefaultRolloverStrategy：指定同一个文件夹下最多有几个日志文件时开始输出最旧的，创建新的<ul>
-<li>max</li>
+<li><p>DefaultRolloverStrategy：指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的</p>
+<ul>
+<li>max：默认7个文件</li>
 </ul>
+</li>
+</ol>
 </li>
 </ul>
 </li>
@@ -283,7 +323,10 @@
 </li>
 <li><p>子节点</p>
 <ol>
-<li>AppenderRef，用来指定该日志输出到哪个Appender</li>
+<li>AppenderRef，用来指定该日志输出到哪个Appender<ul>
+<li>ref</li>
+</ul>
+</li>
 </ol>
 </li>
 </ul>
