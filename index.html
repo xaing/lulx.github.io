@@ -156,6 +156,230 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java-log-framework" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/12/java-log-framework/">java 日志框架</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/12/java-log-framework/" class="archive-article-date">
+  	<time datetime="2019-03-12T08:32:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="统一日志接口规范"><a href="#统一日志接口规范" class="headerlink" title="统一日志接口规范"></a>统一日志接口规范</h4><blockquote>
+<p>统一接口抽象层，它提供了众多的适配器能对接其他所有开源日志框架<br>将日志level、日志输出等统一的管理<br>接口抽象层的适配器对各种日志框架使用方法实现了统一定义</p>
+</blockquote>
+<h5 id="slf4j"><a href="#slf4j" class="headerlink" title="slf4j"></a>slf4j</h5><p>​    是基于API的java日志框架，slf4j提供了简单统一的日志记录的接口，开发者在配置部署时只需要吸纳这个接口就能实现日志功能。</p>
+<p>​    自身没有提供具体的日志解决方案，它是负责服务于各种各样的日志系统，允许用户在部署应用上使用自己常用的日志框架。</p>
+<h5 id="commons-logging"><a href="#commons-logging" class="headerlink" title="commons-logging"></a>commons-logging</h5><p>​    允许运行时绑定任意的日志库。</p>
+<p>​    对log4j和java.util.logging的配置问题兼容性不佳，还会遇到类加载问题。</p>
+<h4 id="框架实现"><a href="#框架实现" class="headerlink" title="框架实现"></a>框架实现</h4><h5 id="log4j"><a href="#log4j" class="headerlink" title="log4j"></a>log4j</h5><p>​    log4j是Apache下一个功能非常丰富的java日志库实现，基于java的开源的日志组件。</p>
+<p>​    通过log4j可以把日志输出控制台、文件、用户界面，可以输出到操作系统的事件记录器和一些系统常驻进程，方便自定义日志格式和日志等级。</p>
+<h5 id="logback"><a href="#logback" class="headerlink" title="logback"></a>logback</h5><p>​    logback是log4j的改进版本，原生支持slf4j（同一作者）。</p>
+<p>​    logback解决了log4j不能使用占位符的问题，可以通过jmx修改日志配置，可以从jmx控制台直接操作，无需重启应用程序。</p>
+<p>​    相比log4j：</p>
+<pre><code>1. 原生实现slf4j API，log4j需要中间层转换
+2. 支持xml、Groovy方式配置
+3. 支持配置文件中加入条件判断
+4. 更强大的过滤器
+5. 充分的测试
+6. 丰富的免费文档
+7. 自动重载有变更的配置文件
+8. 自动压缩历史日志
+</code></pre><h5 id="log4j2"><a href="#log4j2" class="headerlink" title="log4j2"></a>log4j2</h5><p>​    log4j2是log4j的升级版本，但不兼容log4j，因为它基本上吧log4j版本的核心全部采购掉了。</p>
+<p>​    log4j2设计上很大程度模仿了slf4j-logback，性能也 获得了很大的提升.</p>
+<h4 id="log4j2-xml日志文件配置"><a href="#log4j2-xml日志文件配置" class="headerlink" title="log4j2.xml日志文件配置"></a>log4j2.xml日志文件配置</h4><ul>
+<li><p>配置文件</p>
+<ul>
+<li><p>log4j 2.x版本不再支持像1.x中的.properties后缀的文件配置方式，2.x版本配置文件后缀名只能为”.xml”,”.json”或者”.jsn”</p>
+</li>
+<li><p>系统选择配置文件的优先级(从先到后)</p>
+<ol>
+<li>.classpath下的名为log4j2-test.json 或者log4j2-test.jsn的文件</li>
+<li>.classpath下的名为log4j2-test.xml的文件</li>
+<li>.classpath下名为log4j2.json 或者log4j2.jsn的文件</li>
+<li>.classpath下名为log4j2.xml的文件</li>
+</ol>
+</li>
+<li><p>缺省默认配置文件</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span></span><br><span class="line"><span class="xml"> <span class="tag">&lt;<span class="name">Configuration</span> <span class="attr">status</span>=<span class="string">"WARN"</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">Appenders</span>&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;<span class="name">Console</span> <span class="attr">name</span>=<span class="string">"Console"</span> <span class="attr">target</span>=<span class="string">"SYSTEM_OUT"</span>&gt;</span></span></span><br><span class="line"><span class="xml">       <span class="tag">&lt;<span class="name">PatternLayout</span> <span class="attr">pattern</span>=<span class="string">"%d</span></span></span><span class="template-variable">&#123;HH:mm:ss.SSS&#125;</span><span class="xml"><span class="tag"><span class="string"> [%t] %-5level %logger</span></span></span><span class="template-variable">&#123;36&#125;</span><span class="xml"><span class="tag"><span class="string"> - %msg%n"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;/<span class="name">Console</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">Appenders</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">Loggers</span>&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;<span class="name">Root</span> <span class="attr">level</span>=<span class="string">"error"</span>&gt;</span></span></span><br><span class="line"><span class="xml">       <span class="tag">&lt;<span class="name">AppenderRef</span> <span class="attr">ref</span>=<span class="string">"Console"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;/<span class="name">Root</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">Loggers</span>&gt;</span></span></span><br><span class="line"><span class="xml"> <span class="tag">&lt;/<span class="name">Configuration</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>节点解析</p>
+<ul>
+<li><p>根节点Configurable</p>
+<ul>
+<li><p>两个属性</p>
+<ul>
+<li><p>status：指定log4j本身的打印日志级别</p>
+</li>
+<li><p>monitorinterval：指定log4j自动重新配置的监测间隔事件，单位是s，最小为5s</p>
+</li>
+</ul>
+</li>
+<li><p>两个子节点</p>
+<ol>
+<li>Appenders</li>
+<li>Loggers</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Appenders节点，三个子节点</p>
+<ol>
+<li>Console：用来定义输出到控制台的Appender<ul>
+<li>name：指定Appender的名字</li>
+<li>target：SYSTEM_OUT或SYSTEM_ERR，一般只设置默认：SYSTEM_OUT</li>
+<li>PatternLayout：输出格式，不设置默认为%m%n</li>
+</ul>
+</li>
+<li>File：定义输出到指定位置的文件的Appender<ul>
+<li>name：指定Appender的名字</li>
+<li>filename：指定输出日志的目的文件带全路径的文件名</li>
+<li>PatternLayout：输出格式，不设置默认为%m%n</li>
+</ul>
+</li>
+<li>RollingFile：定义超出指定大小自动删除旧的创建新的Appender<ul>
+<li>name：指定Appender的名字</li>
+<li>filename：指定输出日志的目的文件带 全路径的文件名</li>
+<li>PatternLayout：输出格式，不设置默认%m%n</li>
+<li>filePattern：指定新建日志文件的名称格式</li>
+<li>Policies：指定滚动日志的策略，什么时候进行新建日志文件的输出日志<ol>
+<li>子节点TimeBasedTriggeringPolicy，基于时间的滚动策略<ul>
+<li>interval：指定多久滚动一次，默认是1hour</li>
+<li>modulate：用来调整时间</li>
+</ul>
+</li>
+<li>子节点SizeBasedTriggeringPolicy：指定文件大小的滚动策略<ul>
+<li>size：定义每个日志文件的大小</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>DefaultRolloverStrategy：指定同一个文件夹下最多有几个日志文件时开始输出最旧的，创建新的<ul>
+<li>max</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Loggers节点，两个节点</p>
+<ol>
+<li><p>Root：指定项目的根日志，如果没有单独指定Logger，那么就默认使用该Root日志输出</p>
+<ul>
+<li><p>属性</p>
+<ul>
+<li>level：日志输出级别，共8个级别：all&lt;trace&lt;debug&lt;info&lt;warn&lt;error&lt;fatal&lt;off</li>
+</ul>
+</li>
+<li><p>子节点</p>
+<ol>
+<li>AppenderRef，用来指定该日志输出到哪个Appender</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Logger：单独指定日志的形式，比如为指定包下的class指定不同的日志级别</p>
+<ul>
+<li>属性<ul>
+<li>level：日志的输出级别，共有8个级别：all&lt;trace&lt;debug&lt;info&lt;warn&lt;error&lt;fatal&lt;off</li>
+<li>name：指定该logger所有适用的类或者类所在的包全路径，继承至root节点</li>
+<li>additivity：=“false”，只在自定义的Appender中输出</li>
+</ul>
+</li>
+<li>子节点<ol>
+<li>AppenderRef：指定该日志输出到哪个Appender，如果没有指定，就会默认继承root，如果指定了，那么会在指定的这个Appender和root的Appender中都会输出</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>日志级别</p>
+<ul>
+<li>共有8个级别，按照从低到高为：All &lt; Trace &lt; Debug &lt; Info &lt; Warn &lt; Error &lt; Fatal &lt; OFF</li>
+</ul>
+<p>| 标准级别 | 常量级别          |  |<br>| :——: | —————– | —-|<br>|   off    | 0                 |最高等级，关闭所有日志记录|<br>|  fatal   | 100               |输出每个严重的错误事件将会导致应用程序的退出的日志|<br>|  error   | 200               |输出错误信息日志|<br>|   warn   | 300               |输出警告及warn以下级别的日志|<br>|   info   | 400               |消息在粗粒度级别上突出强调应用程序的运行过程|<br>|  debug   | 500               |指出细粒度信息事件对调试应用程序的运行过程|<br>|  trace   | 600               |详细记录查询运行中的每一步|<br>|   all    | Integer.MAX_VALUE |最低等级的，用于打开所有日志记录|</p>
+</li>
+<li><p>日志过滤方式    </p>
+<ul>
+<li><strong>程序会打印高于或等于所设置级别的日志，设置的日志等级越高，打印出来的日志就越少</strong></li>
+</ul>
+<p>| 事件级别 |       |       |      |      |       |       | 日志配置级别 |<br>| ——– | —– | —– | —- | —- | —– | —– | ———— |<br>|          | trace | debug | info | warn | error | fatal | off          |<br>| all      | <font color="red">yes</font> | <font color="red">yes</font> | <font color="red">yes</font> | <font color="red">yes</font> | <font color="red">yes</font> | <font color="red">yes</font> | no           |<br>| trace    | <font color="blue">yes</font> | no    | no   | no   | no    | no    | no           |<br>| debug    | <font color="blue">yes</font> | <font color="blue">yes</font> | no   | no   | no    | no    | no           |<br>| info     | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | no   | no    | no    | no           |<br>| warn     | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | no    | no    | no           |<br>| error    | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | no    | no           |<br>| fatal    | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | <font color="blue">yes</font> | no           |<br>| off      | no    | no    | no   | no   | no    | no    | no           |</p>
+</li>
+</ul>
+<p>​    </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">log</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/12/java-log-framework/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hexo-GitHub-0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -387,6 +611,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
